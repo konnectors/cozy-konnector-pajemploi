@@ -6,13 +6,14 @@ process.env.SENTRY_DSN =
 
 const { BaseKonnector } = require('cozy-konnector-libs')
 const { authenticate, searchPeriodBefore } = require('./common')
+const childminder = require('./childminder')
 const employer = require('./employer')
 
 module.exports = new BaseKonnector(function fetch(fields) {
   const today = new Date()
   const period = searchPeriodBefore(today)
 
-  return authenticate(fields.login, fields.password).then(() =>
-    employer.fetchPayslips(period, fields.folderPath)
-  )
+  return authenticate(fields.login, fields.password)
+    .then(() => employer.fetchPayslips(period, fields.folderPath))
+    .then(() => childminder.fetchPayslips(period, fields.folderPath))
 })
