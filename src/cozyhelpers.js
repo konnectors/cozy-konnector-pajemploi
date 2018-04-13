@@ -7,7 +7,11 @@ module.exports = {
 // create a folder if it does not already exist
 function mkdirp(path, folderName) {
   return cozyClient.files.statByPath(`${path}/${folderName}`).catch(err => {
-    log('info', err.message, `${path} folder does not exist yet, creating it`)
+    if (err.status != 404) throw err
+    log('info',
+      `${path}/${folderName} folder does not exist yet, creating it: ${
+        err.message
+      }`)
     return cozyClient.files.statByPath(`${path}`).then(parentFolder =>
       cozyClient.files.createDirectory({
         name: folderName,

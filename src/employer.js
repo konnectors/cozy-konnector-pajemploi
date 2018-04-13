@@ -92,6 +92,8 @@ function parsePeriod(dateString) {
 }
 
 function fetchPayslipFiles(payslipsByEmployee, folderPath) {
+  log('info', 'payslipsByEmployee=' + JSON.stringify(payslipsByEmployee))
+
   return Promise.all(
     map(payslipsByEmployee, (payslips, employee) => {
       const files = payslips.map(fileEntry)
