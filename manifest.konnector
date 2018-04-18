@@ -1,23 +1,14 @@
 {
   "version": "1.0.0",
   "name": "Pajemploi",
-  "slug": "pajemploi-collect",
   "type": "konnector",
   "language": "node",
   "icon": "icon.gif",
+  "slug": "pajemploi-collect",
   "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
   "vendorLink": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
-  "developer": {
-    "name": "Sébastien Nicouleau",
-    "url": ""
-  },
   "categories": ["public_service"],
-  "screenshots": ["screenshots/screenshot.png"],
-  "langs": ["fr"],
-  "dataType": [
-    "document"
-  ],
   "fields": {
     "login": {
       "type": "text"
@@ -32,27 +23,51 @@
       }
     }
   },
-  "locales": {
-    "fr": {
-      "short_description": "Récupérer vos documents Pajemploi"
-    },
-    "en": {
-      "short_description": "Fetch your Pajemploi documents"
-    }
-  },
+  "dataType": [
+    "document"
+  ],
   "permissions": {
     "books": {
-      "description": "Required to save books' references",
       "type": "io.cozy.books"
     },
     "files": {
-      "description": "Required to save the covers",
       "type": "io.cozy.files"
     },
     "accounts": {
-      "description": "Required to get the account's data",
       "type": "io.cozy.accounts",
       "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "Sébastien Nicouleau",
+    "url": ""
+  },
+  "screenshots": ["screenshots/screenshot.png"],
+  "langs": ["fr"],
+  "locales": {
+    "fr": {
+      "short_description": "Récupérer vos documents Pajemploi",
+      "long_description": "Récupérer vos documents Pajemploi",
+      "permissions": {
+        "files": {
+          "description": "Utilisé pour sauvegarder vos factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour récupérer les informations de votre compte"
+        }
+      }
+    },
+    "en": {
+      "short_description": "Fetch your Pajemploi documents",
+      "long_description": "Fetch your Pajemploi documents",
+      "permissions": {
+        "files": {
+          "description": "Required to save the file documents"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
     }
   }
 }
