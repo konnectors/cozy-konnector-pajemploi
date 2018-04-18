@@ -4,10 +4,10 @@
   "type": "konnector",
   "language": "node",
   "icon": "icon.gif",
-  "slug": "pajemploi-collect",
+  "slug": "pajemploi",
   "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
-  "vendorLink": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
+  "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
   "categories": ["public_service"],
   "fields": {
     "login": {
@@ -23,7 +23,7 @@
       }
     }
   },
-  "dataType": [
+  "data_types": [
     "document"
   ],
   "permissions": {
@@ -42,7 +42,7 @@
     "name": "Sébastien Nicouleau",
     "url": ""
   },
-  "screenshots": ["screenshots/screenshot.png"],
+  "screenshots": [],
   "langs": ["fr"],
   "locales": {
     "fr": {
