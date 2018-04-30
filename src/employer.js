@@ -1,8 +1,7 @@
-const { log, saveFiles } = require('cozy-konnector-libs')
+const { log, mkdirp, saveFiles } = require('cozy-konnector-libs')
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
 
-const { mkdirp } = require('./cozyhelpers')
 const { baseUrl, request } = require('./request')
 
 const listUrl = baseUrl + '/ajaxlistebs.jsp'
