@@ -1,8 +1,12 @@
-const { log, saveFiles } = require('cozy-konnector-libs')
+const {
+  log,
+  mkdirp,
+  normalizeFilename,
+  saveFiles
+} = require('cozy-konnector-libs')
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
 
-const { mkdirp } = require('./cozyhelpers')
 const { baseUrl, request } = require('./request')
 
 const listUrl = baseUrl + '/ajaxlistebs.jsp'
@@ -97,6 +101,7 @@ function fetchPayslipFiles(payslipsByEmployee, folderPath) {
   return Promise.all(
     map(payslipsByEmployee, (payslips, employee) => {
       const files = payslips.map(fileEntry)
+      employee = normalizeFilename(employee)
       return mkdirp(folderPath, employee).then(() =>
         saveFiles(files, `${folderPath}/${employee}`)
       )
