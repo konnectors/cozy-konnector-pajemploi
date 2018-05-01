@@ -19,12 +19,14 @@ function fileEntry({ period, ref, norng }) {
   return {
     fileurl: downloadUrl,
     filename: `${period}.pdf`,
-    requestOptions: {
-      method: 'POST',
-      formData: {
-        ref,
-        norng
-      }
-    }
+    requestOptions: requestOptions({ ref, norng })
+  }
+}
+
+function requestOptions({ ref, norng }) {
+  if (norng) {
+    return { method: 'POST', formData: { ref, norng } }
+  } else {
+    return { qs: { ref } }
   }
 }

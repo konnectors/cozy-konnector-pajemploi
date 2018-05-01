@@ -7,6 +7,7 @@ process.env.SENTRY_DSN =
 const { BaseKonnector } = require('cozy-konnector-libs')
 
 const { authenticate } = require('./auth')
+const childminder = require('./childminder')
 const employer = require('./employer')
 const period = require('./period')
 
@@ -14,7 +15,11 @@ module.exports = new BaseKonnector(function fetch(fields) {
   const today = new Date()
   const periodRange = period.range(today)
 
-  return authenticate(fields.login, fields.password).then(() =>
-    employer.fetchPayslips({ periodRange, folderPath: fields.folderPath })
-  )
+  return authenticate(fields.login, fields.password)
+    .then(() =>
+      employer.fetchPayslips({ periodRange, folderPath: fields.folderPath })
+    )
+    .then(() =>
+      childminder.fetchPayslips({ periodRange, folderPath: fields.folderPath })
+    )
 })
