@@ -1,17 +1,12 @@
-const {
-  log,
-  mkdirp,
-  normalizeFilename,
-  saveFiles
-} = require('cozy-konnector-libs')
+const { log, normalizeFilename } = require('cozy-konnector-libs')
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
 
+const payslip = require('./payslip')
 const period = require('./period')
 const { baseUrl, request } = require('./request')
 
 const listUrl = baseUrl + '/ajaxlistebs.jsp'
-const downloadUrl = baseUrl + '/paje_bulletinsalaire.pdf'
 
 module.exports = {
   fetchPayslips
@@ -84,26 +79,11 @@ function fetchPayslipFiles(payslipsByEmployee, folderPath) {
   log('info', 'payslipsByEmployee=' + JSON.stringify(payslipsByEmployee))
 
   return Promise.all(
-    map(payslipsByEmployee, (payslips, employee) => {
-      const files = payslips.map(fileEntry)
-      employee = normalizeFilename(employee)
-      return mkdirp(folderPath, employee).then(() =>
-        saveFiles(files, `${folderPath}/${employee}`)
-      )
-    })
+    map(payslipsByEmployee, (payslips, employee) =>
+      payslip.fetch({
+        payslips,
+        folderPath: `${folderPath}/${normalizeFilename(employee)}`
+      })
+    )
   )
-}
-
-function fileEntry({ period, ref, norng }) {
-  return {
-    fileurl: downloadUrl,
-    filename: `${period}.pdf`,
-    requestOptions: {
-      method: 'POST',
-      formData: {
-        ref,
-        norng
-      }
-    }
-  }
 }
