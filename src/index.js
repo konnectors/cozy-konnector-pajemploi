@@ -8,9 +8,13 @@ const { BaseKonnector } = require('cozy-konnector-libs')
 
 const { authenticate } = require('./auth')
 const employer = require('./employer')
+const period = require('./period')
 
 module.exports = new BaseKonnector(function fetch(fields) {
+  const today = new Date()
+  const periodRange = period.range(today)
+
   return authenticate(fields.login, fields.password).then(() =>
-    employer.fetchPayslips(fields.folderPath)
+    employer.fetchPayslips({ periodRange, folderPath: fields.folderPath })
   )
 })

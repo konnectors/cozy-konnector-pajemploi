@@ -7,6 +7,7 @@ const {
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
 
+const period = require('./period')
 const { baseUrl, request } = require('./request')
 
 const listUrl = baseUrl + '/ajaxlistebs.jsp'
@@ -16,24 +17,14 @@ module.exports = {
   fetchPayslips
 }
 
-function fetchPayslips(folderPath) {
-  return fetchPayslipsMetadata().then(payslipsByEmployee =>
+function fetchPayslips({ periodRange, folderPath }) {
+  return fetchPayslipsMetadata(periodRange).then(payslipsByEmployee =>
     fetchPayslipFiles(payslipsByEmployee, folderPath)
   )
 }
 
-function fetchPayslipsMetadata() {
-  const today = new Date()
-  const startYear = '2004' // Pajemploi exists since 2004
-  const startMonth = '01'
-  const endYear = today.getFullYear().toString()
-  const endMonth = `0${today.getMonth() + 1}`.slice(-2)
-
-  log(
-    'info',
-    'Looking for payslips between ' +
-      `${startMonth}/${startYear} and ${endMonth}/${endYear}...`
-  )
+function fetchPayslipsMetadata(periodRange) {
+  log('info', `Looking for payslips ${period.rangeToSentence(periodRange)}...`)
 
   return request({
     method: 'POST',
@@ -41,10 +32,10 @@ function fetchPayslipsMetadata() {
     form: {
       activite: 'T',
       byAsc: 'false',
-      dtDebAnnee: startYear,
-      dtDebMois: startMonth,
-      dtFinAnnee: endYear,
-      dtFinMois: endMonth,
+      dtDebAnnee: periodRange.start.year,
+      dtDebMois: periodRange.start.month,
+      dtFinAnnee: periodRange.end.year,
+      dtFinMois: periodRange.end.month,
       noIntSala: '',
       order: 'periode',
       paye: 'false'
@@ -73,7 +64,7 @@ const jsCodeRegExp = /^document\.getElementById\('ref'\)\.value='([^']+)';docume
 
 function parsePayslipRow($tr) {
   const periodString = $tr.find('td:nth-child(1)').text()
-  const [year, month] = parsePeriod(periodString)
+  const [year, month] = period.parse(periodString)
   const employee = $tr.find('td:nth-child(2)').text()
   const amount = $tr
     .find('td:nth-child(3)')
@@ -87,17 +78,6 @@ function parsePayslipRow($tr) {
     ref,
     norng
   }
-}
-
-// For some reason, first date is formatted like "2018-01-01 00:00:00.0", while
-// subsequent ones look like "01/2018".
-const frDateRegExp = /\s*(\d{2})\/(\d{4}).*/
-const isoDateRegExp = /\s*(\d{4})-(\d{2}).*/
-
-function parsePeriod(dateString) {
-  const frDateMatch = frDateRegExp.exec(dateString)
-  if (frDateMatch) return frDateMatch.slice(1, 3).reverse()
-  else return isoDateRegExp.exec(dateString).slice(1, 3)
 }
 
 function fetchPayslipFiles(payslipsByEmployee, folderPath) {
