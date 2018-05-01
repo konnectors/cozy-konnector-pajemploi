@@ -13,11 +13,16 @@ const listUrl = baseUrl + '/ajaxlistebs.jsp'
 const downloadUrl = baseUrl + '/paje_bulletinsalaire.pdf'
 
 module.exports = {
-  fetchPayslips,
-  fetchPayslipFiles
+  fetchPayslips
 }
 
-function fetchPayslips() {
+function fetchPayslips(folderPath) {
+  return fetchPayslipsMetadata().then(payslipsByEmployee =>
+    fetchPayslipFiles(payslipsByEmployee, folderPath)
+  )
+}
+
+function fetchPayslipsMetadata() {
   const today = new Date()
   const startYear = '2004' // Pajemploi exists since 2004
   const startMonth = '01'

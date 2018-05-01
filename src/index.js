@@ -7,12 +7,10 @@ process.env.SENTRY_DSN =
 const { BaseKonnector } = require('cozy-konnector-libs')
 
 const { authenticate } = require('./auth')
-const { fetchPayslips, fetchPayslipFiles } = require('./employer')
+const employer = require('./employer')
 
 module.exports = new BaseKonnector(function fetch(fields) {
-  return authenticate(fields.login, fields.password)
-    .then(fetchPayslips)
-    .then(payslipsByEmployee =>
-      fetchPayslipFiles(payslipsByEmployee, fields.folderPath)
-    )
+  return authenticate(fields.login, fields.password).then(() =>
+    employer.fetchPayslips(fields.folderPath)
+  )
 })
