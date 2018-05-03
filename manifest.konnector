@@ -1,42 +1,73 @@
 {
-  "version": "1.0.0",
-  "name": "konnector name",
-  "type": "node",
-  "slug": "konnectorslug",
-  "description": "description",
-  "source": "git://github.com/konnectors/cozy-konnector-thename.git",
-  "locales": {
-    "fr": {
-      "permissions": {
-        "books": {
-          "description": "Utilisé pour sauvegarder les références de vos livres"
-        },
-        "files": {
-          "description": "Utilisé pour sauvegarder les couvertures de vos livres"
-        },
-        "accounts": {
-          "description": "Utilisé pour récupérer les informations de votre compte"
-        }
+  "version": "1.0.4",
+  "name": "Pajemploi",
+  "type": "konnector",
+  "language": "node",
+  "icon": "icon.gif",
+  "slug": "pajemploi",
+  "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
+  "editor": "Cozy",
+  "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
+  "categories": ["public_service"],
+  "fields": {
+    "login": {
+      "type": "text"
+    },
+    "password": {
+      "type": "password"
+    },
+    "advancedFields": {
+      "folderPath": {
+        "advanced": true,
+        "isRequired": false
       }
     }
   },
+  "data_types": [
+    "document"
+  ],
   "permissions": {
     "books": {
-      "description": "Required to save books' references",
       "type": "io.cozy.books"
     },
     "files": {
-      "description": "Required to save the covers",
       "type": "io.cozy.files"
     },
     "accounts": {
-      "description": "Required to get the account's data",
       "type": "io.cozy.accounts",
       "verbs": ["GET"]
     }
   },
   "developer": {
-    "name": "cozy",
-    "url": "cozy.io"
+    "name": "Sébastien Nicouleau",
+    "url": ""
+  },
+  "screenshots": [],
+  "langs": ["fr"],
+  "locales": {
+    "fr": {
+      "short_description": "Récupérer vos documents Pajemploi",
+      "long_description": "Récupérer vos documents Pajemploi",
+      "permissions": {
+        "files": {
+          "description": "Utilisé pour sauvegarder vos factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour récupérer les informations de votre compte"
+        }
+      }
+    },
+    "en": {
+      "short_description": "Fetch your Pajemploi documents",
+      "long_description": "Fetch your Pajemploi documents",
+      "permissions": {
+        "files": {
+          "description": "Required to save the file documents"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
+    }
   }
 }
