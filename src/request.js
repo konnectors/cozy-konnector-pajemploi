@@ -1,6 +1,6 @@
 const { requestFactory } = require('cozy-konnector-libs')
 
-const baseUrl = 'http://www.pajemploi.urssaf.fr/pajeweb'
+const baseUrl = 'https://www.pajemploi.urssaf.fr/pajeweb'
 
 const request = requestFactory({
   cheerio: true,
