@@ -26,10 +26,8 @@
   "data_types": [
     "document"
   ],
+  "screenshots": [],
   "permissions": {
-    "books": {
-      "type": "io.cozy.books"
-    },
     "files": {
       "type": "io.cozy.files"
     },
@@ -42,7 +40,6 @@
     "name": "Sébastien Nicouleau",
     "url": ""
   },
-  "screenshots": [],
   "langs": ["fr"],
   "locales": {
     "fr": {
