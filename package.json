@@ -32,7 +32,7 @@
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.5.2",
+    "cozy-konnector-libs": "4.5.3",
     "lodash.groupby": "4.6.0",
     "lodash.map": "4.6.0"
   },
