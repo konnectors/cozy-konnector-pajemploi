@@ -12,7 +12,11 @@ module.exports = {
 
 function fetch({ payslips, folderPath }) {
   const files = payslips.map(fileEntry)
-  return mkdirp(folderPath).then(() => saveFiles(files, folderPath))
+  return mkdirp(folderPath).then(() =>
+    saveFiles(files, folderPath, {
+      contentType: 'application/pdf'
+    })
+  )
 }
 
 function fileEntry({ period, ref, norng }) {

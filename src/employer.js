@@ -41,7 +41,7 @@ function fetchPayslipsMetadata(periodRange) {
       if (payslips.length > 0) {
         log('info', `Found ${payslips.length} payslips.`)
       } else {
-        log('warn', 'No payslips found.')
+        log('info', 'No payslips found.')
       }
       return groupBy(payslips, 'employee')
     })
