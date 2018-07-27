@@ -1,0 +1,71 @@
+{
+  "version": "1.0.8",
+  "name": "Pajemploi",
+  "type": "konnector",
+  "language": "node",
+  "icon": "icon.gif",
+  "slug": "pajemploi",
+  "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
+  "editor": "Cozy",
+  "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
+  "categories": ["public_service"],
+  "fields": {
+    "login": {
+      "type": "text"
+    },
+    "password": {
+      "type": "password"
+    },
+    "advancedFields": {
+      "folderPath": {
+        "advanced": true,
+        "isRequired": false
+      }
+    }
+  },
+  "data_types": [
+    "document"
+  ],
+  "screenshots": [],
+  "permissions": {
+    "files": {
+      "type": "io.cozy.files"
+    },
+    "accounts": {
+      "type": "io.cozy.accounts",
+      "verbs": ["GET"]
+    }
+  },
+  "developer": {
+    "name": "Sébastien Nicouleaud",
+    "url": ""
+  },
+  "langs": ["fr"],
+  "locales": {
+    "fr": {
+      "short_description": "Récupérer vos documents Pajemploi",
+      "long_description": "Récupérer vos documents Pajemploi",
+      "permissions": {
+        "files": {
+          "description": "Utilisé pour sauvegarder vos factures"
+        },
+        "accounts": {
+          "description": "Utilisé pour récupérer les informations de votre compte"
+        }
+      }
+    },
+    "en": {
+      "short_description": "Fetch your Pajemploi documents",
+      "long_description": "Fetch your Pajemploi documents",
+      "permissions": {
+        "files": {
+          "description": "Required to save the file documents"
+        },
+        "accounts": {
+          "description": "Required to get the account's data"
+        }
+      }
+    }
+  },
+  "manifest_version": "2"
+}
