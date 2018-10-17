@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
@@ -8,7 +8,9 @@
   "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
   "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
-  "categories": ["public_service"],
+  "categories": [
+    "public_service"
+  ],
   "fields": {
     "login": {
       "type": "text"
@@ -33,14 +35,18 @@
     },
     "accounts": {
       "type": "io.cozy.accounts",
-      "verbs": ["GET"]
+      "verbs": [
+        "GET"
+      ]
     }
   },
   "developer": {
     "name": "Sébastien Nicouleaud",
     "url": ""
   },
-  "langs": ["fr"],
+  "langs": [
+    "fr"
+  ],
   "locales": {
     "fr": {
       "short_description": "Récupérer vos documents Pajemploi",
