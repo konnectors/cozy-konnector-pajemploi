@@ -5,7 +5,7 @@
   "language": "node",
   "icon": "icon.gif",
   "slug": "pajemploi",
-  "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
+  "source": "git@github.com:konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
   "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
   "categories": [
