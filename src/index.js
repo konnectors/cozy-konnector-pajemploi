@@ -19,6 +19,7 @@ module.exports = new BaseKonnector(function fetch(fields) {
     .then(() =>
       employer.fetchPayslips({ periodRange, folderPath: fields.folderPath })
     )
+    .then(() => employer.fetchAttests(fields))
     .then(() =>
       childminder.fetchPayslips({ periodRange, folderPath: fields.folderPath })
     )
