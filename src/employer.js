@@ -1,4 +1,4 @@
-const { log, normalizeFilename } = require('cozy-konnector-libs')
+const { log, normalizeFilename, saveFiles } = require('cozy-konnector-libs')
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
 
@@ -7,9 +7,11 @@ const period = require('./period')
 const { baseUrl, request } = require('./request')
 
 const listUrl = baseUrl + '/ajaxlistebs.jsp'
+const attestUrl = baseUrl + '/atfirecap.htm'
 
 module.exports = {
-  fetchPayslips
+  fetchPayslips,
+  fetchAttests
 }
 
 function fetchPayslips({ periodRange, folderPath }) {
@@ -76,7 +78,7 @@ function parsePayslipRow($tr) {
 }
 
 function fetchPayslipFiles(payslipsByEmployee, folderPath) {
-  log('info', 'payslipsByEmployee=' + JSON.stringify(payslipsByEmployee))
+  log('debug', 'payslipsByEmployee=' + JSON.stringify(payslipsByEmployee))
 
   return Promise.all(
     map(payslipsByEmployee, (payslips, employee) =>
@@ -86,4 +88,59 @@ function fetchPayslipFiles(payslipsByEmployee, folderPath) {
       })
     )
   )
+}
+
+function fetchAttests(fields) {
+  log('info', 'Try to fetch attestations')
+  return fetchAttestsYears().then(yearsList =>
+    evalAndDownloadAttests(yearsList, fields)
+  )
+  //  return fetchPayslipsMetadata(periodRange).then(payslipsByEmployee =>
+  //    fetchPayslipFiles(payslipsByEmployee, folderPath)
+  //  )
+}
+
+function fetchAttestsYears() {
+  log('info', `Fetching years for attestations`)
+  return request({
+    method: 'GET',
+    uri: attestUrl
+  }).then($ => {
+    return Array.from(
+      $('form')
+        .attr('action', 'atfirecap.htm')
+        .find('option')
+    ).map(option => $(option).val())
+  })
+}
+
+async function evalAndDownloadAttests(yearsList, fields) {
+  let attestations = []
+  for (const year of yearsList) {
+    // Test if a pdf is available
+    const $ = await request({
+      method: 'POST',
+      uri: attestUrl,
+      form: {
+        annee: parseInt(year)
+      }
+    })
+    if ($.html().includes('Aucun volet social')) {
+      log('debug', `No attestation available for ${year}`)
+    } else if ($.html().includes('href="/pajeweb/paje_atfiempl.pdf?annee=')) {
+      log('info', `Attestation found for year ${year}`)
+      attestations.push({
+        fileurl: baseUrl + `/paje_atfiempl.pdf?annee=${year}`,
+        filename: `${year}_Attestation_fiscale.pdf`
+      })
+    } else {
+      log('warn', `Unknown case for ${year} in attestation availability`)
+    }
+  }
+
+  // Saving pdf available
+  if (attestations.length > 0) {
+    log('info', 'Saving attestations to cozy ...')
+    await saveFiles(attestations, fields)
+  }
 }
