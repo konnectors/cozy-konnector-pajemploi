@@ -1,14 +1,16 @@
 {
-  "version": "1.0.8",
+  "version": "1.2.0",
   "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
-  "icon": "icon.gif",
+  "icon": "icon.svg",
   "slug": "pajemploi",
-  "source": "git://github.com/konnectors/cozy-konnector-pajemploi.git",
+  "source": "git@github.com:konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
   "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
-  "categories": ["public_service"],
+  "categories": [
+    "public_service"
+  ],
   "fields": {
     "login": {
       "type": "text"
@@ -33,18 +35,22 @@
     },
     "accounts": {
       "type": "io.cozy.accounts",
-      "verbs": ["GET"]
+      "verbs": [
+        "GET"
+      ]
     }
   },
   "developer": {
     "name": "Sébastien Nicouleaud",
     "url": ""
   },
-  "langs": ["fr"],
+  "langs": [
+    "fr"
+  ],
   "locales": {
     "fr": {
       "short_description": "Récupérer vos documents Pajemploi",
-      "long_description": "Récupérer vos documents Pajemploi",
+      "long_description": "Récupérer vos documents Pajemploi.\n\nPour les comptes __Employeur__ :\n- Bulletins de salaires\n- Attestations fiscales annuelles\nPour les comptes __Salarié__ :\n- Bulletins de salaires",
       "permissions": {
         "files": {
           "description": "Utilisé pour sauvegarder vos factures"
@@ -56,7 +62,7 @@
     },
     "en": {
       "short_description": "Fetch your Pajemploi documents",
-      "long_description": "Fetch your Pajemploi documents",
+      "long_description": "Fetch your Pajemploi documents.\nFor __Employer__ accounts :\n- Payslips\n- Annual tax certificates\nFor __Employee__ accounts :\n- Payslips",
       "permissions": {
         "files": {
           "description": "Required to save the file documents"
