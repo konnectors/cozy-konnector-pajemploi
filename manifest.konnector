@@ -3,7 +3,7 @@
   "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
-  "icon": "icon.gif",
+  "icon": "icon.svg",
   "slug": "pajemploi",
   "source": "git@github.com:konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
@@ -49,8 +49,8 @@
   ],
   "locales": {
     "fr": {
-      "short_description": "Récupérer vos documents Pajemploi",
-      "long_description": "Récupérer vos documents Pajemploi",
+      "short_description": "Récupére vos documents Pajemploi",
+      "long_description": "Récupére vos documents Pajemploi.\n\n&nbsp;\n\nPour les comptes __Employeur__ :\n- Bulletins de salaires\n- Attestations fiscales annuelles\n\nPour les comptes __Salarié__ :\n- Bulletins de salaires",
       "permissions": {
         "files": {
           "description": "Utilisé pour sauvegarder vos factures"
@@ -62,7 +62,7 @@
     },
     "en": {
       "short_description": "Fetch your Pajemploi documents",
-      "long_description": "Fetch your Pajemploi documents",
+      "long_description": "Fetch your Pajemploi documents.\n\n&nbsp;\n\nFor __Employer__ accounts :\n- Payslips\n- Annual tax certificates\n\nFor __Employee__ accounts :\n- Payslips",
       "permissions": {
         "files": {
           "description": "Required to save the file documents"
