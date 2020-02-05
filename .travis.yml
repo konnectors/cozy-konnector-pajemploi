@@ -1,11 +1,9 @@
 language: node_js
 node_js:
-- '8'
+- '12'
 env:
   global:
-  - GH_USER_EMAIL="travis@example.org"
-  - GH_USER_NAME="cozy-bot"
-  - DEPLOY_REPOSITORY="git@github.com:konnectors/cozy-konnector-pajemploi.git"
+  # REGISTRY_TOKEN(editor=cozy, app=pajemploi)
   - secure: ImGyfgzmC63vRXxfuy5PeYFWoTx3J3IEm922QRfvGEtICEymUlY65cZKmKLXvZTpXX0f7cLJL6zekyXusqIPObWCZh/rU6Y2FzIc3XoSjzdfnFDXlnEegvbeSPtgoXWSCP+UzZVZF2Q5xkDeyT4aM7tzuHxXQYBCt5twr4owB3g/qW2ml3a7WIm7ZYaYkxhUwJ6W4Te4lOp5bZPxNoMJMeRN1QOHM+SmLIxdFlQaFOd/g5hJTwEzVyiKxwFeuz2ibvpiJTZ4i3BfkQJFK98H+ci/V9st00TDY+w85rBlJBOaBF6VAAbkBPtIEMRv1iroTn0sDjzG9lIgSUx0aQnXFHtc2SHw1IcG7TW5IV3YkGjZpvmCQMZZ+H7e2huvfM2Xzw0RJbo/gpr9/jAjNszaZUzl0xwNq0dSFEWTjjo/20P6iVusCwGbl0upa99cu//XVKUHm63t+7LzOET4baiYWZHZk7Gyjc35SsY4q7teQp96N62h+UcBPVn6fH3Nlw7C0eMNAEyaWkaOaJ2G1gxbXcfbjg8TdY1Hhpu70xq4gAig5T/1ftuh2J47VJgyCDRN2GjvZgZp1yoIunwkzdEyehVCKvPEHNhlOwxejvlrkBOJZ4qjUqc70NByqZy7sgB/neSDW2TyV42fD0N0Ewp6aJarCv/OF/lVLBQ/1USytpo=
 cache:
   yarn: true
@@ -18,7 +16,6 @@ branches:
 script:
 - yarn lint
 - yarn build
-- yarn run check
 deploy:
 - provider: script
   skip-cleanup: true
