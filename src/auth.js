@@ -11,32 +11,29 @@ module.exports = {
   authenticate
 }
 
-function authenticate(login, password) {
+async function authenticate(login, password) {
+  await this.deactivateAutoSuccessfulLogin()
   log('info', 'Authenticating...')
 
   // getting cookies from the form url
-  return request(formUrl)
-    .then(() => {
-      return request({
-        method: 'POST',
-        uri: loginUrl,
-        form: {
-          j_username: login,
-          j_password: password,
-          j_passwordfake: password
-        }
-      })
-    })
-    .then($ => {
-      if (pageContainsLoginForm($)) {
-        log('error', 'Login form still visible: login failed.')
-        throw new Error('LOGIN_FAILED')
-      } else if (pageContainsLogoutLink($)) {
-        log('info', 'Logout link found: login successful.')
-      } else {
-        log('warn', 'Cannot find login form or logout link: where am I?')
-      }
-    })
+  await request(formUrl)
+  const $ = await request.post(loginUrl, {
+    form: {
+      j_username: login,
+      j_password: password,
+      j_passwordfake: password
+    }
+  })
+
+  if (pageContainsLoginForm($)) {
+    log('error', 'Login form still visible: login failed.')
+    throw new Error('LOGIN_FAILED')
+  } else if (pageContainsLogoutLink($)) {
+    log('info', 'Logout link found: login successful.')
+  } else {
+    log('warn', 'Cannot find login form or logout link: where am I?')
+  }
+  await this.notifySuccessfulLogin()
 }
 
 function pageContainsLoginForm($) {
