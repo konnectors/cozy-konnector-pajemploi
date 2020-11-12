@@ -1,4 +1,4 @@
-const { mkdirp, saveFiles } = require('cozy-konnector-libs')
+const { mkdirp } = require('cozy-konnector-libs')
 
 const { baseUrl } = require('./request')
 
@@ -13,7 +13,7 @@ module.exports = {
 function fetch({ payslips, folderPath }) {
   const files = payslips.map(fileEntry)
   return mkdirp(folderPath).then(() =>
-    saveFiles(files.map(file => ({ ...file, folderPath })), folderPath, {
+    this.saveFiles(files.map(file => ({ ...file, folderPath })), folderPath, {
       contentType: 'application/pdf',
       fileIdAttributes: ['folderPath', 'filename']
     })
