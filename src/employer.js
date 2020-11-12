@@ -81,7 +81,7 @@ function fetchPayslipFiles(payslipsByEmployee, folderPath) {
 
   return Promise.all(
     map(payslipsByEmployee, (payslips, employee) =>
-      payslip.fetch({
+      payslip.fetch.bind(this)({
         payslips,
         folderPath: `${folderPath}/${normalizeFilename(employee)}`
       })

@@ -100,7 +100,7 @@ function parsePayslipRow($tr) {
 function fetchPayslipFiles(payslipsByEmployer, folderPath) {
   return Promise.all(
     map(payslipsByEmployer, (payslips, employer) => {
-      payslip.fetch({
+      payslip.fetch.bind(this)({
         payslips,
         folderPath: `${folderPath}/${normalizeFilename(employer)}`
       })
