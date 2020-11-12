@@ -1,10 +1,10 @@
-const { log, normalizeFilename, saveFiles } = require('cozy-konnector-libs')
+const { log, normalizeFilename } = require('cozy-konnector-libs')
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
 
 const payslip = require('./payslip')
 const period = require('./period')
-const { baseUrl, request } = require('./request')
+const { baseUrl } = require('./request')
 
 const listUrl = baseUrl + '/ajaxlistebs.jsp'
 const attestUrl = baseUrl + '/atfirecap.htm'
@@ -14,16 +14,15 @@ module.exports = {
   fetchAttests
 }
 
-function fetchPayslips({ periodRange, folderPath }) {
-  return fetchPayslipsMetadata(periodRange).then(payslipsByEmployee =>
-    fetchPayslipFiles(payslipsByEmployee, folderPath)
-  )
+async function fetchPayslips({ periodRange, folderPath }) {
+  const payslipsByEmployee = await fetchPayslipsMetadata.bind(this)(periodRange)
+  return await fetchPayslipFiles.bind(this)(payslipsByEmployee, folderPath)
 }
 
 function fetchPayslipsMetadata(periodRange) {
   log('info', `Looking for payslips ${period.rangeToSentence(periodRange)}...`)
 
-  return request({
+  return this.request({
     method: 'POST',
     uri: listUrl,
     form: {
@@ -90,19 +89,15 @@ function fetchPayslipFiles(payslipsByEmployee, folderPath) {
   )
 }
 
-function fetchAttests(fields) {
+async function fetchAttests(fields) {
   log('info', 'Try to fetch attestations')
-  return fetchAttestsYears().then(yearsList =>
-    evalAndDownloadAttests(yearsList, fields)
-  )
-  //  return fetchPayslipsMetadata(periodRange).then(payslipsByEmployee =>
-  //    fetchPayslipFiles(payslipsByEmployee, folderPath)
-  //  )
+  const yearsList = await fetchAttestsYears.bind(this)()
+  return await evalAndDownloadAttests.bind(this)(yearsList, fields)
 }
 
 function fetchAttestsYears() {
   log('info', `Fetching years for attestations`)
-  return request({
+  return this.request({
     method: 'GET',
     uri: attestUrl
   }).then($ => {
@@ -118,7 +113,7 @@ async function evalAndDownloadAttests(yearsList, fields) {
   let attestations = []
   for (const year of yearsList) {
     // Test if a pdf is available
-    const $ = await request({
+    const $ = await this.request({
       method: 'POST',
       uri: attestUrl,
       form: {
@@ -141,6 +136,8 @@ async function evalAndDownloadAttests(yearsList, fields) {
   // Saving pdf available
   if (attestations.length > 0) {
     log('info', 'Saving attestations to cozy ...')
-    await saveFiles(attestations, fields)
+    await this.saveFiles(attestations, fields, {
+      fileIdAttributes: ['fileurl']
+    })
   }
 }

@@ -4,7 +4,7 @@ const map = require('lodash.map')
 
 const payslip = require('./payslip')
 const period = require('./period')
-const { baseUrl, request } = require('./request')
+const { baseUrl } = require('./request')
 
 const listUrl = baseUrl + '/attesemploisala.jsp'
 const rowsPerPage = 10
@@ -13,31 +13,33 @@ module.exports = {
   fetchPayslips
 }
 
-function fetchPayslips({ periodRange, folderPath }) {
-  return fetchPagesCount(periodRange)
-    .then(function(pagesCount) {
-      log('info', `Found ${pagesCount} payslips page(s)`)
+async function fetchPayslips({ periodRange, folderPath }) {
+  const pagesCount = await fetchPagesCount.bind(this)(periodRange)
+  log('info', `Found ${pagesCount} payslips page(s)`)
 
-      let payslipsPromise = Promise.resolve([])
-
-      for (let pageNumber = 1; pageNumber <= pagesCount; pageNumber++) {
-        payslipsPromise = payslipsPromise.then(function(payslips) {
-          return requestPayslipsPage(periodRange, pageNumber).then($ => {
-            const newPayslips = parsePayslipsPage($, pageNumber)
-            return payslips.concat(newPayslips)
-          })
+  let payslipsPromise = Promise.resolve([])
+  const self = this
+  for (let pageNumber = 1; pageNumber <= pagesCount; pageNumber++) {
+    payslipsPromise = payslipsPromise.then(function(payslips) {
+      return requestPayslipsPage
+        .bind(self)(periodRange, pageNumber)
+        .then($ => {
+          const newPayslips = parsePayslipsPage($, pageNumber)
+          return payslips.concat(newPayslips)
         })
-      }
-
-      return payslipsPromise
     })
-    .then(payslips =>
-      fetchPayslipFiles(groupBy(payslips, 'employer'), folderPath)
-    )
+  }
+  const payslips = await payslipsPromise
+  return await fetchPayslipFiles.bind(this)(
+    groupBy(payslips, 'employer'),
+    folderPath
+  )
 }
 
 function fetchPagesCount(periodRange) {
-  return requestPayslipsPage(periodRange).then(parsePagesCount)
+  return requestPayslipsPage
+    .bind(this)(periodRange)
+    .then(parsePagesCount)
 }
 
 function parsePagesCount($) {
@@ -53,7 +55,7 @@ function requestPayslipsPage(periodRange, pageNumber) {
   pageNumber = pageNumber || 1
   const offset = (pageNumber - 1) * rowsPerPage
 
-  return request({
+  return this.request({
     method: 'POST',
     uri: listUrl,
     form: {

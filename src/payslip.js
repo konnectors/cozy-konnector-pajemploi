@@ -13,8 +13,9 @@ module.exports = {
 function fetch({ payslips, folderPath }) {
   const files = payslips.map(fileEntry)
   return mkdirp(folderPath).then(() =>
-    saveFiles(files, folderPath, {
-      contentType: 'application/pdf'
+    saveFiles(files.map(file => ({ ...file, folderPath })), folderPath, {
+      contentType: 'application/pdf',
+      fileIdAttributes: ['folderPath', 'filename']
     })
   )
 }

@@ -1,7 +1,7 @@
 // Common code for both employers and childminders
 
-const { baseUrl, request } = require('./request')
-const { log } = require('cozy-konnector-libs')
+const { baseUrl } = require('./request')
+const { log, solveCaptcha } = require('cozy-konnector-libs')
 
 const formUrl = baseUrl + 'info/cms/sites/pajewebinfo/accueil.html'
 const loginUrl = baseUrl + '/j_spring_security_check'
@@ -16,12 +16,21 @@ async function authenticate(login, password) {
   log('info', 'Authenticating...')
 
   // getting cookies from the form url
-  await request(formUrl)
-  const $ = await request.post(loginUrl, {
+  await this.request(formUrl)
+  const websiteURL = 'https://www.pajemploi.urssaf.fr/pajeweb/logindec.htm'
+  const login$ = await this.request(websiteURL)
+  const message = login$('.message').text()
+  if (message.includes('maintenance')) {
+    log('error', message.trim())
+    throw new Error('VENDOR_DOWN')
+  }
+  const websiteKey = login$('.g-recaptcha').attr('data-sitekey')
+  const gRecaptchaResponse = await solveCaptcha({ websiteURL, websiteKey })
+  const $ = await this.request.post(loginUrl, {
     form: {
       j_username: login,
       j_password: password,
-      j_passwordfake: password
+      'g-recaptcha-response': gRecaptchaResponse
     }
   })
 
