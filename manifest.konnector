@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
@@ -7,7 +7,7 @@
   "slug": "pajemploi",
   "source": "git@github.com:konnectors/cozy-konnector-pajemploi.git",
   "editor": "Cozy",
-  "vendor_link": "http://www.pajemploi.urssaf.fr/pajewebinfo/cms/sites/pajewebinfo/accueil.html",
+  "vendor_link": "https://www.pajemploi.urssaf.fr/pajeweb/logindec.htm",
   "categories": [
     "public_service"
   ],
@@ -74,5 +74,10 @@
       }
     }
   },
+  "features": [
+    "LOGIN_OK",
+    "METADATA_DEDUP",
+    "CAPTCHA_RESOLUTION"
+  ],
   "manifest_version": "2"
 }
