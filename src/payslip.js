@@ -29,9 +29,5 @@ function fileEntry({ period, ref, norng }) {
 }
 
 function requestOptions({ ref, norng }) {
-  if (norng) {
-    return { method: 'POST', formData: { ref, norng } }
-  } else {
-    return { qs: { ref } }
-  }
+  return { method: 'POST', formData: { ref, norng } }
 }

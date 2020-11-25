@@ -4,7 +4,7 @@ const { baseUrl } = require('./request')
 const { log, solveCaptcha } = require('cozy-konnector-libs')
 
 const formUrl = baseUrl + 'info/cms/sites/pajewebinfo/accueil.html'
-const loginUrl = baseUrl + '/j_spring_security_check'
+const loginUrl = baseUrl + '/login-pajemploi.htm'
 const logoutUrl = baseUrl + '/j_spring_security_logout'
 
 module.exports = {

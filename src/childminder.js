@@ -84,10 +84,7 @@ function parsePayslipRow($tr) {
   const employer = $tr.find('td:nth-child(2)').text()
   const [year, month] = period.parse($tr.find('td:nth-child(3)').text())
   const amount = parseFloat($tr.find('td:nth-child(4)').text())
-  const href = $tr
-    .find('td:nth-child(1) a[alt="Bulletin de salaire"]')
-    .attr('href')
-  const ref = href && href.split('=')[1]
+  const ref = $tr.find('form[name=formBulletinSalaire] > input[name=ref]').val()
 
   return {
     employer,
