@@ -1,6 +1,5 @@
 {
-  "version": "1.4.0",
-  "name": "Pajemploi",
+  "version": "1.5.1", "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
   "icon": "icon.svg",
@@ -37,6 +36,12 @@
     "files": {
       "type": "io.cozy.files"
     },
+    "carboncopy": {
+      "type": "io.cozy.certified.carboncopy"
+    },
+    "electronicsafe": {
+      "type": "io.cozy.certified.electronicsafe"
+    },
     "accounts": {
       "type": "io.cozy.accounts"
     }
@@ -56,6 +61,12 @@
         "files": {
           "description": "Utilisé pour sauvegarder vos factures"
         },
+        "carboncopy": {
+          "description": "Utilisé pour certifier vos fichier copie conforme avec les documents d'origine"
+        },
+        "electronicsafe": {
+          "description": "Utilisé pour la fonctionnalité de coffre-fort numérique"
+        },
         "accounts": {
           "description": "Utilisé pour récupérer les informations de votre compte"
         }
@@ -67,6 +78,12 @@
       "permissions": {
         "files": {
           "description": "Required to save the file documents"
+        },
+        "carboncopy": {
+          "description": "Required for carbon copy documents"
+        },
+        "electronicsafe": {
+          "description": "Required for electronic safe documents"
         },
         "accounts": {
           "description": "Required to get the account's data"
