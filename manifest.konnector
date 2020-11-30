@@ -1,5 +1,6 @@
 {
-  "version": "1.5.1", "name": "Pajemploi",
+  "version": "1.5.1",
+  "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
   "icon": "icon.svg",
