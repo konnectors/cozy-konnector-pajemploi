@@ -37,11 +37,8 @@
     "files": {
       "type": "io.cozy.files"
     },
-    "carboncopy": {
+    "carbon_copy": {
       "type": "io.cozy.certified.carbon_copy"
-    },
-    "electronicsafe": {
-      "type": "io.cozy.certified.electronic_safe"
     },
     "accounts": {
       "type": "io.cozy.accounts"
