@@ -29,7 +29,9 @@ function fileEntry({ period, ref, norng }) {
     fileurl: downloadUrl,
     filename: `${period}.pdf`,
     fileAttributes: {
-      carbonCopy: true
+      metadata: {
+        carbonCopy: true
+      }
     },
     requestOptions: requestOptions({ ref, norng })
   }
