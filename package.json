@@ -1,6 +1,6 @@
 {
   "name": "cozy-konnector-pajemploi",
-  "version": "1.6.0",
+  "version": "1.5.2",
   "description": "",
   "repository": {
     "type": "git",
@@ -36,12 +36,12 @@
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.37.1",
+    "cozy-konnector-libs": "4.37.0",
     "lodash.groupby": "4.6.0",
     "lodash.map": "4.6.0"
   },
   "devDependencies": {
-    "cozy-jobs-cli": "1.15.1",
-    "cozy-konnector-build": "1.1.1"
+    "cozy-jobs-cli": "1.15.0",
+    "cozy-konnector-build": "1.1.0"
   }
 }
