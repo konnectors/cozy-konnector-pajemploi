@@ -1,5 +1,5 @@
 {
-  "version": "1.5.1",
+  "version": "1.5.2",
   "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
@@ -92,7 +92,8 @@
   "features": [
     "LOGIN_OK",
     "METADATA_DEDUP",
-    "CAPTCHA_RESOLUTION"
+    "CAPTCHA_RESOLUTION",
+    "CARBON_COPY"
   ],
   "manifest_version": "2"
 }
