@@ -126,7 +126,10 @@ async function evalAndDownloadAttests(yearsList, fields) {
       log('info', `Attestation found for year ${year}`)
       attestations.push({
         fileurl: baseUrl + `/paje_atfiempl.pdf?annee=${year}`,
-        filename: `${year}_Attestation_fiscale.pdf`
+        filename: `${year}_Attestation_fiscale.pdf`,
+        fileAttributes: {
+          carbonCopy: true
+        }
       })
     } else {
       log('warn', `Unknown case for ${year} in attestation availability`)
