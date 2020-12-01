@@ -128,7 +128,9 @@ async function evalAndDownloadAttests(yearsList, fields) {
         fileurl: baseUrl + `/paje_atfiempl.pdf?annee=${year}`,
         filename: `${year}_Attestation_fiscale.pdf`,
         fileAttributes: {
-          carbonCopy: true
+          metadata: {
+            carbonCopy: true
+          }
         }
       })
     } else {
