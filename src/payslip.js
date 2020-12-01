@@ -13,10 +13,14 @@ module.exports = {
 function fetch({ payslips, folderPath }) {
   const files = payslips.map(fileEntry)
   return mkdirp(folderPath).then(() =>
-    this.saveFiles(files.map(file => ({ ...file, folderPath })), folderPath, {
-      contentType: 'application/pdf',
-      fileIdAttributes: ['folderPath', 'filename']
-    })
+    this.saveFiles(
+      files.map(file => ({ ...file, folderPath })),
+      { ...this.fields, folderPath },
+      {
+        contentType: 'application/pdf',
+        fileIdAttributes: ['folderPath', 'filename']
+      }
+    )
   )
 }
 
@@ -24,6 +28,9 @@ function fileEntry({ period, ref, norng }) {
   return {
     fileurl: downloadUrl,
     filename: `${period}.pdf`,
+    fileAttributes: {
+      carbonCopy: true
+    },
     requestOptions: requestOptions({ ref, norng })
   }
 }
