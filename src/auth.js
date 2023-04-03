@@ -24,27 +24,29 @@ async function authenticate(login, password) {
     log('error', message.trim())
     throw new Error('VENDOR_DOWN')
   }
-  let $ 
+  let $
   const websiteKey = login$('.g-recaptcha').attr('data-sitekey')
-  if(websiteKey){
+  if (websiteKey) {
     const gRecaptchaResponse = await solveCaptcha({ websiteURL, websiteKey })
-     $ = await this.request.post(loginUrl, {
+    $ = await this.request.post(loginUrl, {
       form: {
         j_username: login,
         j_password: password,
         'g-recaptcha-response': gRecaptchaResponse
       }
     })
-  }else{
-    log('warn', `Cannot find websiteKey for captcha login, trying without captcha`)
-     $ = await this.request.post(loginUrl, {
+  } else {
+    log(
+      'warn',
+      `Cannot find websiteKey for captcha login, trying without captcha`
+    )
+    $ = await this.request.post(loginUrl, {
       form: {
         j_username: login,
         j_password: password
       }
     })
   }
-  
 
   if (pageContainsLoginForm($)) {
     log('error', 'Login form still visible: login failed.')

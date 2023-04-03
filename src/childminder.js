@@ -20,7 +20,8 @@ async function fetchPayslips({ periodRange, folderPath }) {
   let payslipsPromise = Promise.resolve([])
   const self = this
   for (let pageNumber = 1; pageNumber <= pagesCount; pageNumber++) {
-    payslipsPromise = payslipsPromise.then(function(payslips) {
+    payslipsPromise = payslipsPromise.then(function (payslips) {
+      // eslint-disable-next-line promise/no-nesting
       return requestPayslipsPage
         .bind(self)(periodRange, pageNumber)
         .then($ => {
@@ -37,17 +38,12 @@ async function fetchPayslips({ periodRange, folderPath }) {
 }
 
 function fetchPagesCount(periodRange) {
-  return requestPayslipsPage
-    .bind(this)(periodRange)
-    .then(parsePagesCount)
+  return requestPayslipsPage.bind(this)(periodRange).then(parsePagesCount)
 }
 
 function parsePagesCount($) {
   return parseInt(
-    $(`form[name="etat"]`)
-      .prev('div')
-      .find('a:last-child')
-      .text()
+    $(`form[name="etat"]`).prev('div').find('a:last-child').text()
   )
 }
 
