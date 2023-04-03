@@ -56,16 +56,18 @@ function parsePayslipList($) {
 }
 
 // Download form is filled up and submitted from JavaScript
-const jsCodeRegExp = /^document\.getElementById\('ref'\)\.value='([^']+)';document\.getElementById\('norng'\)\.value='([^']+)';document\.formBulletinSalaire\.submit\(\);$/
+// const jsCodeRegExp =
+//   /^document\.getElementById\('ref'\)\.value='([^']+)';document\.getElementById\('norng'\)\.value='([^']+)';document\.formBulletinSalaire\.submit\(\);$/
+
+const jsCodeRegExp =
+  /document\.getElementById\('ref'\)\.value='([^']+)';document\.getElementById\('norng'\)\.value='([^']+)';document\.formBulletinSalaire\.submit\(\);/
 
 function parsePayslipRow($tr) {
+  log('info', 'parsePayslipRow starts')
   const periodString = $tr.find('td:nth-child(1)').text()
   const [year, month] = period.parse(periodString)
   const employee = $tr.find('td:nth-child(2)').text()
-  const amount = $tr
-    .find('td:nth-child(3)')
-    .text()
-    .trim()
+  const amount = $tr.find('td:nth-child(3)').text().trim()
   const [ref, norng] = jsCodeRegExp.exec($tr.attr('onclick')).slice(1, 3)
   return {
     period: `${year}-${month}`,
@@ -102,9 +104,7 @@ function fetchAttestsYears() {
     uri: attestUrl
   }).then($ => {
     return Array.from(
-      $('form')
-        .attr('action', 'atfirecap.htm')
-        .find('option')
+      $('form').attr('action', 'atfirecap.htm').find('option')
     ).map(option => $(option).val())
   })
 }
@@ -122,7 +122,7 @@ async function evalAndDownloadAttests(yearsList, fields) {
     })
     if ($.html().includes('Aucun volet social')) {
       log('debug', `No attestation available for ${year}`)
-    } else if ($.html().includes('href="/pajeweb/paje_atfiempl.pdf?annee=')) {
+    } else if ($.html().includes('action="/pajeweb/paje_atfiempl.pdf')) {
       log('info', `Attestation found for year ${year}`)
       attestations.push({
         fileurl: baseUrl + `/paje_atfiempl.pdf?annee=${year}`,
