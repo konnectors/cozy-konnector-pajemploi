@@ -89,9 +89,14 @@
       }
     }
   },
+  "qualification_labels": [
+    "pay_sheet",
+    "other_tax_document"
+  ]
   "features": [
     "LOGIN_OK",
     "METADATA_DEDUP",
+    "DOC_QUALIFICATION_V2",
     "CAPTCHA_RESOLUTION",
     "CARBON_COPY"
   ],
