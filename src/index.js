@@ -1,6 +1,6 @@
 process.env.SENTRY_DSN =
   process.env.SENTRY_DSN ||
-  'https://0c0cb928ab40494085526d2af96fff5d:50c5609fbcea4bc5abeaa49c2eac8f3a@sentry.cozycloud.cc/30'
+  'https://15a1981404904d328c688e9bcd7fbf79@errors.cozycloud.cc/58'
 
 const { CookieKonnector, log } = require('cozy-konnector-libs')
 
