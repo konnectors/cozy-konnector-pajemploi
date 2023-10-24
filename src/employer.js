@@ -1,6 +1,9 @@
-const { log, normalizeFilename } = require('cozy-konnector-libs')
+const { log, normalizeFilename, cozyClient } = require('cozy-konnector-libs')
 const groupBy = require('lodash.groupby')
 const map = require('lodash.map')
+
+const models = cozyClient.new.models
+const { Qualification } = models.document
 
 const payslip = require('./payslip')
 const period = require('./period')
@@ -129,7 +132,10 @@ async function evalAndDownloadAttests(yearsList, fields) {
         filename: `${year}_Attestation_fiscale.pdf`,
         fileAttributes: {
           metadata: {
-            carbonCopy: true
+            contentAuthor: 'pajemploi.urssaf.fr',
+            issueDate: new Date(),
+            carbonCopy: true,
+            qualification: Qualification.getByLabel('other_tax_document')
           }
         }
       })

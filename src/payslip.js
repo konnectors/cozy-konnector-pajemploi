@@ -1,6 +1,9 @@
-const { mkdirp } = require('cozy-konnector-libs')
+const { mkdirp, cozyClient } = require('cozy-konnector-libs')
 
 const { baseUrl } = require('./request')
+
+const models = cozyClient.new.models
+const { Qualification } = models.document
 
 const downloadUrl = baseUrl + '/paje_bulletinsalaire.pdf'
 
@@ -30,7 +33,10 @@ function fileEntry({ period, ref, norng }) {
     filename: `${period}.pdf`,
     fileAttributes: {
       metadata: {
-        carbonCopy: true
+        contentAuthor: 'pajemploi.urssaf.fr',
+        issueDate: new Date(),
+        carbonCopy: true,
+        qualification: Qualification.getByLabel('pay_sheet')
       }
     },
     requestOptions: requestOptions({ ref, norng })
