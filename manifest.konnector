@@ -1,5 +1,5 @@
 {
-  "version": "1.8.0",
+  "version": "1.9.0",
   "name": "Pajemploi",
   "type": "konnector",
   "language": "node",
@@ -9,7 +9,7 @@
   "editor": "Cozy",
   "vendor_link": "https://www.pajemploi.urssaf.fr/pajeweb/logindec.htm",
   "categories": [
-    "public_service"
+    "finance"
   ],
   "fields": {
     "login": {
